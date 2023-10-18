@@ -1,0 +1,62 @@
+CREATE TABLE IF NOT EXISTS public.readers (
+    Reader_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+    Reader_name CHARACTER VARYING NOT NULL,  
+    Address CHARACTER VARYING NOT NULL,
+    Telephone_number CHARACTER VARYING NOT NULL,
+PRIMARY KEY (Reader_id)
+);
+
+COMMENT ON TABLE public.readers
+    IS 'Читатели';
+
+CREATE TABLE IF NOT EXISTS public.books (
+    Book_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+    Book_name CHARACTER VARYING NOT NULL,
+    Author_id INTEGER NOT NULL,
+    Author_name CHARACTER VARYING NOT NULL,
+    Publication_year CHARACTER VARYING NOT NULL,
+    Price CHARACTER VARYING NOT NULL,
+    Number_of_pages CHARACTER VARYING NOT NULL,
+    Publishing_house_id INTEGER NOT NULL,
+    Number_of_books_in_fund CHARACTER VARYING NOT NULL,
+    Reader_id INTEGER NOT NULL,
+PRIMARY KEY (Book_id)
+FOREIGN KEY (Author_id)
+FOREIGN KEY (Publishing_house_id)
+FOREIGN KEY (Reader_id)
+);    
+
+COMMENT ON TABLE public.books
+    IS 'Книги';   
+
+CREATE TABLE IF NOT EXISTS public.publishing_houses (
+    Publishing_house_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+    Publishing_house_name CHARACTER VARYING NOT NULL,
+    City CHARACTER VARYING NOT NULL,
+PRIMARY KEY (Publishing_house_id)
+);
+
+COMMENT ON TABLE public.publishing_houses
+    IS 'Издательства';     
+
+CREATE TABLE IF NOT EXISTS public.authors (
+    Author_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+    Author_name CHARACTER VARYING NOT NULL,
+    Additional_information CHARACTER VARYING NOT NULL,
+PRIMARY KEY (Author_id)
+);
+
+COMMENT ON TABLE public.authors
+    IS 'Авторы'; 
+
+CREATE TABLE IF NOT EXISTS public.books_authors (
+    Author_id_Book_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+    Author_id INTEGER NOT NULL,
+    Book_id INTEGER NOT NULL,
+PRIMARY KEY (Author_id_Book_id)
+FOREIGN KEY (Author_id)
+FOREIGN KEY (Book_id)
+);
+
+COMMENT ON TABLE public.books_authors
+    IS 'Книги и авторы'; 
